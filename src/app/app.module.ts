@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 @NgModule({
   declarations: [
     AppComponent
+	HighscoresComponent,
+	FriendsComponent
   ],
   imports: [
     BrowserModule
