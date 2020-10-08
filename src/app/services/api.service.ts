@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -6,9 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
-  // constructor(
-  //   http: HttpClient
-  // ) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   getHighscores(user): Observable<any> {
     const body = {
