@@ -1,23 +1,30 @@
-import { Input } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
-import { ISkills } from 'src/app/models/skills.model';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTable } from '@angular/material/table';
+import { HighscoresDataSource, HighscoresItem } from './highscores-datasource';
 
 @Component({
   selector: 'app-highscores',
   templateUrl: './highscores.component.html',
-  styles: []
+  styleUrls: ['./highscores.component.scss']
 })
-export class HighscoresComponent implements OnInit {
-  @Input() user: string;
-  data: ISkills;
+export class HighscoresComponent implements AfterViewInit, OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatTable) table: MatTable<HighscoresItem>;
+  dataSource: HighscoresDataSource;
 
-  constructor() { }
+  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
+  displayedColumns = ['id', 'name'];
 
-  ngOnInit(): void {
-    this.data.attack = 99;
-    this.data.strength = 99;
-    this.data.defense = 99;
-    this.data.hitpoints = 99;
+  ngOnInit() {
+    this.dataSource = new HighscoresDataSource();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.table.dataSource = this.dataSource;
+  }
 }
